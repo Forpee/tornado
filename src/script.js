@@ -64,13 +64,14 @@ function range(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-let number = 100;
+let number = 300;
 let animated = [];
 
 for (let i = 0; i < number; i++) {
     let level = range(-3, 3);
+    let zero = (level) / 3;
     let precision = 100;
-    let rad = 80;
+    let rad = 80 * zero * zero + Math.random() * 10;
     let spline = [];
 
     let offset = Math.random();
