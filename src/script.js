@@ -58,11 +58,17 @@ const scene = new THREE.Scene();
 //     }
 
 // }
-let number = 1;
+
+function range(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+let number = 100;
 
 for (let i = 0; i < number; i++) {
+    let level = range(-3, 3);
     let precision = 100;
-    let rad = 30;
+    let rad = 80;
     let spline = [];
 
     for (let j = 0; j <= precision; j++) {
@@ -84,6 +90,8 @@ for (let i = 0; i < number; i++) {
     let mesh = new THREE.Mesh(tubeGeometry, new THREE.MeshNormalMaterial());
 
     scene.add(mesh);
+    mesh.position.set(0, level, 0);
+    mesh.scale.set(0.01, 0.01, 0.01);
 }
 
 // const path = new CustomSinCurve(10);
@@ -122,7 +130,7 @@ window.addEventListener('resize', () => {
 
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-camera.position.set(0, 100, 2);
+camera.position.set(0, 10, 2);
 scene.add(camera);
 
 // Controls
