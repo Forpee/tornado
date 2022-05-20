@@ -74,8 +74,8 @@ for (let i = 0; i < number; i++) {
 
     let params = {
         scale: 4,
-        extrusionSegments: 100,
-        radiusSegments: 8,
+        extrusionSegments: 400,
+        radiusSegments: 16,
         closed: false,
     };
 
@@ -121,8 +121,8 @@ window.addEventListener('resize', () => {
 // const camera = new THREE.OrthographicCamera(-1/2, 1/2, 1/2, -1/2, 0.1, 100)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.set(0, 0, 2);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
+camera.position.set(0, 100, 2);
 scene.add(camera);
 
 // Controls
