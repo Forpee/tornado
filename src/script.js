@@ -58,15 +58,39 @@ const scene = new THREE.Scene();
 //     }
 
 // }
+let number = 1;
+
+for (let i = 0; i < number; i++) {
+    let precision = 100;
+    let rad = 30;
+    let spline = [];
+
+    for (let j = 0; j < precision; j++) {
+        let x = rad * Math.sin(2 * Math.PI * j / precision);
+        let z = rad * Math.cos(2 * Math.PI * j / precision);
+        spline.push(new THREE.Vector3(x, 0, z));
+    }
+    let sampleClosedSpline = new THREE.CatmullRomCurve3(spline);
+
+    let params = {
+        scale: 4,
+        extrusionSegments: 100,
+        radiusSegments: 8,
+        closed: true,
+    };
+
+    let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, params.radiusSegments, params.closed);
+
+    let mesh = new THREE.Mesh(tubeGeometry, new THREE.MeshNormalMaterial());
+
+    scene.add(mesh);
+}
 
 // const path = new CustomSinCurve(10);
 // const geometry = new THREE.TubeGeometry(path, 20, 2, 8, false);
 // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 // const mesh = new THREE.Mesh(geometry, material);
 // scene.add(mesh);
-
-
-
 
 /**
  * Sizes
