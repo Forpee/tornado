@@ -27,6 +27,7 @@ const scene = new THREE.Scene();
 const material = new THREE.ShaderMaterial({
     uniforms: {
         uTime: { value: 0 },
+        color: { value: 0 },
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -87,14 +88,26 @@ for (let i = 0; i < number; i++) {
     };
 
     let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
+    let tubeGeometry1 = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
+
     let m = material.clone();
+    let m1 = material.clone();
+    m.uniforms.color.value = new THREE.Color(0xffffff);
+    m1.uniforms.color.value = new THREE.Color(0x000000);
+
+    m1.side = THREE.BackSide;
     let mesh = new THREE.Mesh(tubeGeometry, m);
+    let mesh1 = new THREE.Mesh(tubeGeometry1, m1);
 
     scene.add(mesh);
+    scene.add(mesh1);
+
     mesh.position.set(0, level, 0);
     mesh.scale.set(0.01, 0.01, 0.01);
+    mesh1.position.set(0, level, 0);
+    mesh1.scale.set(0.01, 0.01, 0.01);
 
-    animated.push({ mesh, material: m });
+    animated.push({ mesh, material: m, material1: m1 });
 }
 
 // const path = new CustomSinCurve(10);
@@ -148,7 +161,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
+renderer.setClearColor(0xcccccc, 1);
 /**
  * Animate
  */
@@ -163,8 +176,9 @@ const tick = () => {
 
     // Update uniforms
     // material.uniforms.uTime.value = elapsedTime;
-    animated.forEach(({ mesh, material }) => {
+    animated.forEach(({ mesh, material, material1 }) => {
         material.uniforms.uTime.value = elapsedTime;
+        material1.uniforms.uTime.value = elapsedTime;
     });
     // Render
     renderer.render(scene, camera);
