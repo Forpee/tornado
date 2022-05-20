@@ -37,33 +37,36 @@ const scene = new THREE.Scene();
 // const mesh = new THREE.Mesh(geometry, material)
 // scene.add(mesh)
 
-class CustomSinCurve extends THREE.Curve {
+// class CustomSinCurve extends THREE.Curve {
 
-    constructor(scale = 1) {
+//     constructor(scale = 1) {
 
-        super();
+//         super();
 
-        this.scale = scale;
+//         this.scale = scale;
 
-    }
+//     }
 
-    getPoint(t, optionalTarget = new THREE.Vector3()) {
+//     getPoint(t, optionalTarget = new THREE.Vector3()) {
 
-        const tx = t * 3 - 1.5;
-        const ty = Math.sin(2 * Math.PI * t);
-        const tz = 0;
+//         const tx = t * 3 - 1.5;
+//         const ty = Math.sin(2 * Math.PI * t);
+//         const tz = 0;
 
-        return optionalTarget.set(tx, ty, tz).multiplyScalar(this.scale);
+//         return optionalTarget.set(tx, ty, tz).multiplyScalar(this.scale);
 
-    }
+//     }
 
-}
+// }
 
-const path = new CustomSinCurve(10);
-const geometry = new THREE.TubeGeometry(path, 20, 2, 8, false);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+// const path = new CustomSinCurve(10);
+// const geometry = new THREE.TubeGeometry(path, 20, 2, 8, false);
+// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
+
+
 
 /**
  * Sizes
