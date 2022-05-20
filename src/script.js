@@ -23,15 +23,15 @@ const scene = new THREE.Scene();
 // Geometry
 // const geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32)
 
-// // Material
-// const material = new THREE.ShaderMaterial({
-//     uniforms: {
-//         uTime: {value: 0},
-//     },
-//     vertexShader: vertexShader,
-//     fragmentShader: fragmentShader,
-//     side: THREE.DoubleSide
-// })
+// Material
+const material = new THREE.ShaderMaterial({
+    uniforms: {
+        uTime: { value: 0 },
+    },
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+    side: THREE.DoubleSide
+});
 
 // // Mesh
 // const mesh = new THREE.Mesh(geometry, material)
@@ -64,6 +64,7 @@ function range(min, max) {
 }
 
 let number = 100;
+let animated = [];
 
 for (let i = 0; i < number; i++) {
     let level = range(-3, 3);
@@ -86,12 +87,14 @@ for (let i = 0; i < number; i++) {
     };
 
     let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
-
-    let mesh = new THREE.Mesh(tubeGeometry, new THREE.MeshNormalMaterial());
+    let m = material.clone();
+    let mesh = new THREE.Mesh(tubeGeometry, m);
 
     scene.add(mesh);
     mesh.position.set(0, level, 0);
     mesh.scale.set(0.01, 0.01, 0.01);
+
+    animated.push({ mesh, material: m });
 }
 
 // const path = new CustomSinCurve(10);
@@ -160,7 +163,9 @@ const tick = () => {
 
     // Update uniforms
     // material.uniforms.uTime.value = elapsedTime;
-
+    animated.forEach(({ mesh, material }) => {
+        material.uniforms.uTime.value = elapsedTime;
+    });
     // Render
     renderer.render(scene, camera);
 
