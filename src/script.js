@@ -64,7 +64,7 @@ function range(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-let number = 300;
+let number = 100;
 let animated = [];
 
 for (let i = 0; i < number; i++) {
