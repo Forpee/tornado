@@ -65,7 +65,7 @@ for (let i = 0; i < number; i++) {
     let rad = 30;
     let spline = [];
 
-    for (let j = 0; j < precision; j++) {
+    for (let j = 0; j <= precision; j++) {
         let x = rad * Math.sin(2 * Math.PI * j / precision);
         let z = rad * Math.cos(2 * Math.PI * j / precision);
         spline.push(new THREE.Vector3(x, 0, z));
@@ -76,10 +76,10 @@ for (let i = 0; i < number; i++) {
         scale: 4,
         extrusionSegments: 100,
         radiusSegments: 8,
-        closed: true,
+        closed: false,
     };
 
-    let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, params.radiusSegments, params.closed);
+    let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
 
     let mesh = new THREE.Mesh(tubeGeometry, new THREE.MeshNormalMaterial());
 
