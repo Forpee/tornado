@@ -73,7 +73,11 @@ for (let i = 0; i < number; i++) {
     let rad = 80;
     let spline = [];
 
-    for (let j = 0; j <= precision; j++) {
+    let offset = Math.random();
+    let angle = range(0, 2 * Math.PI);
+    let width = Math.random() * 0.5 + 0.5;
+
+    for (let j = 0; j <= precision * width; j++) {
         let x = rad * Math.sin(2 * Math.PI * j / precision);
         let z = rad * Math.cos(2 * Math.PI * j / precision);
         spline.push(new THREE.Vector3(x, 0, z));
@@ -87,8 +91,8 @@ for (let i = 0; i < number; i++) {
         closed: false,
     };
 
-    let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
-    let tubeGeometry1 = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 2, params.radiusSegments, params.closed);
+    let tubeGeometry = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 0.5, params.radiusSegments, params.closed);
+    let tubeGeometry1 = new THREE.TubeBufferGeometry(sampleClosedSpline, params.extrusionSegments, 0.5 + 0.5, params.radiusSegments, params.closed);
 
     let m = material.clone();
     let m1 = material.clone();
@@ -105,8 +109,8 @@ for (let i = 0; i < number; i++) {
     mesh.position.set(0, level, 0);
     mesh.scale.set(0.01, 0.01, 0.01);
     mesh1.position.set(0, level, 0);
-    mesh1.scale.set(0.01, 0.01, 0.01);
-
+    mesh1.scale.set(0.0101, 0.0101, 0.0101);
+    mesh.rotation.y = mesh1.rotation.y = angle;
     animated.push({ mesh, material: m, material1: m1 });
 }
 
@@ -146,7 +150,7 @@ window.addEventListener('resize', () => {
 
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-camera.position.set(0, 10, 2);
+camera.position.set(0, 4, 2);
 scene.add(camera);
 
 // Controls
@@ -157,11 +161,12 @@ controls.enableDamping = true;
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    antialias: true,
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0xcccccc, 1);
+// renderer.setClearColor(0xcccccc, 1);
 /**
  * Animate
  */
